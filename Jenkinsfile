@@ -8,7 +8,8 @@ pipeline{
         stage('Build Maven'){
             steps{
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Desaivishal0206/CICD_Nexus_Jenkins_SonarQube.git']])
-                sh 'mvn clean install'
+                def mvnHome = tool name: 'maveninstall', type: 'maven'
+                sh "${mvnHome}/bin/mvn package"
             }
         }
 

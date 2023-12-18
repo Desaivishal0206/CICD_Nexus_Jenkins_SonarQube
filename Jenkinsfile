@@ -5,11 +5,7 @@ pipeline{
 
     stages{
 
-        stage('COmplie'){
-            def mvnHome = tool name: 'maveninstall', type: 'maven'
-            sh "${mvnHome}/bin/mvn package"
-
-        }
+        
 
         // stage('Build Maven'){
         //     steps{
@@ -19,27 +15,27 @@ pipeline{
         //     }
         // }
 
-        // stage('sonar quality check'){
+        stage('sonar quality check'){
             
-        //     agent{
+            agent{
 
-        //         docker {
-        //             image 'maven'
-        //         }
-        //     }
+                docker {
+                    image 'maven'
+                }
+            }
         
-        //     // steps{
+            steps{
 
-        //     //     script{
-        //     //         withSonarQubeEnv(credentialsId: 'sonar-token') {
+                script{
+                    withSonarQubeEnv(credentialsId: 'sonar-token') {
 
-        //     //             sh 'mvn clean package sonar:sonar'
-        //     //         }
+                        sh 'mvn clean package sonar:sonar'
+                    }
 
 
 
-        //     //     }
-        //     // }
-        // }
+                }
+            }
+        }
     }
 }
